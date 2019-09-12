@@ -47,9 +47,9 @@ import org.apache.sling.commons.json.JSONObject;
 
 public class App
 {
-	public static final String oAuthClientId = "382f491d-89a9-42d0-be9e-ee816a49c871";
-	public static final String oAuthClientSecret = "SHhpwSP7QF7yrUnVYJgJmaw4WnSr_2aCxr17Nc5Wi99Qr_Kv5zAuAM4_IifQiD5aa_7cMc5x0qqIHORWoe8RaA";
-	public static final String accountId = "2750693505001";
+	public static final String oAuthClientId = "Client_ID";
+	public static final String oAuthClientSecret = "Clinet_Seret";
+	public static final String accountId = "Account_ID";
 
 	public static final String accessTokenUrl = "https://oauth.brightcove.com/v4/access_token";
     public static final String createVideoUrl = "https://cms.api.brightcove.com/v1/accounts/ACCOUNT_ID/videos/";
@@ -63,8 +63,6 @@ public class App
 		CredentialsProvider credsProvider = new BasicCredentialsProvider();
 		credsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(oAuthClientId, oAuthClientSecret));
 
-		// The use of an AuthCache and an HttpClient context is required to perform Preemptive authorization
-		// as required by oauth.brightcove.com
 		AuthCache authCache = new BasicAuthCache();
 		authCache.put(new HttpHost("oauth.brightcove.com", 443, "https"), new BasicScheme());
 		HttpClientContext context = HttpClientContext.create();
