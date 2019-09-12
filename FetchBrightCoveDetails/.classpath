@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/aws-java-sdk-core-1.9.17.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/aws-java-sdk-s3-1.11.629.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/httpclient-4.5.10.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/httpcore-4.4.11.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/org.apache.sling.commons.json-2.0.4-incubator.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/org.apache.oltu.oauth2.client-0.31.jar"/>
+	<classpathentry kind="lib" path="D:/Jar Files/brightcovejars/FetchProperties/org.apache.oltu.oauth2.common-0.31.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
