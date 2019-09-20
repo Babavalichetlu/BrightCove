@@ -33,8 +33,14 @@ import org.apache.oltu.oauth2.common.message.types.GrantType;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+//-------------
+import com.google.gson.JsonParser;
 
-public class oath {
+
+
+
+public class utility_fetch_thumbnail2 {
   
     public static final String TOKEN_REQUEST_URL = "https://oauth.brightcove.com/v4/access_token";
     public static final String CLIENT_ID = "382f491d-89a9-42d0-be9e-ee816a49c871";
@@ -45,14 +51,17 @@ public class oath {
 	public static final String oAuthClientId = "382f491d-89a9-42d0-be9e-ee816a49c871";
 	public static final String oAuthClientSecret = "SHhpwSP7QF7yrUnVYJgJmaw4WnSr_2aCxr17Nc5Wi99Qr_Kv5zAuAM4_IifQiD5aa_7cMc5x0qqIHORWoe8RaA";
 	private static final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-	private static final String accountId = "D:\\Brightcove java code\\id.xlsx";
-	
+	private static final String accountId = "D:\\Brightcove java code\\id.xlsx";	
 	//public static final String accountId = "2750693505001";
 	// It will fetch 25 video details
 //	public static final String RESOURCE_URL_TPL="https://cms.api.brightcove.com/v1/accounts/2750693505001/videos?sort=-updated_at&limit=25&offset=0";
 	     // it will fetch video thumnail
-		public static final String RESOURCE_URL_TPL="https://cms.api.brightcove.com/v1/accounts/2750693505001/videos/6086906580001/images";
-   // public static final String RESOURCE_URL_TPL ="https://cms.api.brightcove.com/v1/accounts/2750693505001/videos/6083890030001";
+		//public static final String RESOURCE_URL_TPL="https://cms.api.brightcove.com/v1/accounts/2750693505001/videos/6086906580001/images";
+		public static final String HOST="https://cms.api.brightcove.com/v1/accounts/";		
+		public static final String VIDEOS="/videos/";
+		public static final String VID="";
+		public static final String IMAGES="/images";
+    
     
     
     public static String getAccessToken() throws Exception {
@@ -83,34 +92,45 @@ public class oath {
 		return atr.getAccessToken();
 	}
     
+    
     public static void main(String[] args) {
         try {
+        	String result ="";
+        	String output = null;     
+        	StringBuilder sb = new StringBuilder();         	
             OAuthClient client = new OAuthClient(new URLConnectionClient());
-
-            OAuthClientRequest request =
-                    OAuthClientRequest.tokenLocation(TOKEN_REQUEST_URL)
-                    .setGrantType(GrantType.CLIENT_CREDENTIALS)
-                    .setClientId(CLIENT_ID)
-                    .setClientSecret(CLIENT_SECRET)
-                    // .setScope() here if you want to set the token scope
-                    .buildQueryMessage();
-          
+            OAuthClientRequest request =OAuthClientRequest.tokenLocation(TOKEN_REQUEST_URL).setGrantType(GrantType.CLIENT_CREDENTIALS).setClientId(CLIENT_ID).setClientSecret(CLIENT_SECRET)
+                    .buildQueryMessage();          
             String token=getAccessToken();
-           System.out.println("***token-->"+token);
-
-            String resourceUrl = RESOURCE_URL_TPL.replace(":account-id", ACCOUNT_ID);
-            HttpURLConnection resource_cxn =(HttpURLConnection)(new URL(resourceUrl).openConnection());
-            resource_cxn.addRequestProperty("Authorization", "Bearer " + token);
-           // System.out.println("*****resource_cxn-->"+resource_cxn);
-            InputStream resource = resource_cxn.getInputStream();
-           // System.out.println("*****resource-->"+resource);       
+           System.out.println("***Getting the Token here-->"+token);           
+           String resourceUrl=null;
+           // String resourceUrl = RESOURCE_URL_TPL.replace(":account-id", ACCOUNT_ID);
+           String[] videoId = {"3306768288001","6086906580001"};
+           for (String vid: videoId) {
+            resourceUrl =HOST+ACCOUNT_ID+VIDEOS+vid+IMAGES;          
+           HttpURLConnection resource_cxn =(HttpURLConnection)(new URL(resourceUrl).openConnection());
+           resource_cxn.addRequestProperty("Authorization", "Bearer " + token); 
+           InputStream resource = resource_cxn.getInputStream();          
            BufferedReader r = new BufferedReader(new InputStreamReader(resource, "UTF-8"));
-            String line = null;
-            while ((line = r.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (Exception exn) {
+           System.out.println("Buffered reader--"+ r);          
+           String line = null;
+           while ((line = r.readLine()) != null) {        	   
+        	   sb.append(line); 
+        	   System.out.println("sb-->"+sb);
+           }// while loop ends
+                             
+           JsonObject jsonObject = new JsonParser().parse(sb.toString()).getAsJsonObject();     
+           System.out.println("jsonObject-->"+jsonObject);
+           JsonObject pageName = jsonObject.getAsJsonObject("thumbnail");
+           System.out.println("Thumbnail Image-->"+pageName.get("src"));
+           
+             }//for loop ends
+           System.out.println("Ends here");
+     } catch (Exception exn) {
             exn.printStackTrace();
-        }
-    }
-}
+        }// try-catch ends
+        
+        
+    }//main ends
+    
+}// class ends
